@@ -10,7 +10,7 @@ export const updatePresence = mutation({
     handler: async (ctx, args) => {
         const userId = await auth.getUserId(ctx);
 
-        if (!userId) throw new Error("Unauthorized");
+        if (!userId) return null;
 
         // Check if presence record exists
         const existingPresence = await ctx.db

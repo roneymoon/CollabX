@@ -77,7 +77,13 @@ export const get = query({
     handler: async (ctx, args) => {
         const userId = await auth.getUserId(ctx)
 
-        if (!userId) throw new Error("Unauthorized")
+        if (!userId) {
+            return {
+                page: [],
+                isDone: true,
+                continueCursor: ""
+            };
+        }
 
         let _conversationId = args.conversationId
 

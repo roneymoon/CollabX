@@ -36,7 +36,7 @@ export const join = mutation({
     if (workspace.joinCode !== args.joinCode.toLowerCase()) {
       throw new Error("Invalid join code");
     }
-  
+
     const existingMember = await ctx.db
       .query("members")
       .withIndex("by_workspace_id_user_id", (q) =>
@@ -44,7 +44,7 @@ export const join = mutation({
       )
       .unique();
 
-    if(existingMember){
+    if (existingMember) {
       throw new Error("Already a member of this workspace");
     }
 
@@ -161,7 +161,7 @@ export const getInfoById = query({
   handler: async (ctx, args) => {
     const userId = await auth.getUserId(ctx)
 
-    if(!userId){
+    if (!userId) {
       return null;
     }
 
@@ -187,7 +187,7 @@ export const getById = query({
     const userId = await auth.getUserId(ctx);
 
     if (!userId) {
-      throw new Error("Unauthorized");
+      return null;
     }
 
     const member = await ctx.db
