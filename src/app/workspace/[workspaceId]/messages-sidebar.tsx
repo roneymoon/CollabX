@@ -1,23 +1,30 @@
 "use client";
 
-import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Loader, Plus } from "lucide-react";
-import { Id } from "../../../../convex/_generated/dataModel";
 import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { cn, stripHtml } from "@/lib/utils";
 import { useMemberId } from "@/hooks/use-member-id";
 import { SearchBox } from "./search-box";
+import { useGetConversations } from "@/features/conversations/api/use-get-conversations";
+import { format, isToday, isYesterday } from "date-fns";
 
 interface MessagesSidebarProps {
   className?: string;
 }
 
+const formatMessageTime = (timestamp: number) => {
+  const date = new Date(timestamp);
+  if (isToday(date)) return format(date, "HH:mm");
+  if (isYesterday(date)) return "Yesterday";
+  return format(date, "MMM d");
+};
+
 export const MessagesSidebar = ({ className }: MessagesSidebarProps) => {
   const workspaceId = useWorkspaceId();
   const memberId = useMemberId();
-  const { data: members, isLoading } = useGetMembers({ workspaceId });
+  const { data: conversations, isLoading } = useGetConversations({ workspaceId });
 
   if (isLoading) {
     return (
@@ -46,14 +53,18 @@ export const MessagesSidebar = ({ className }: MessagesSidebarProps) => {
 
       {/* Contact List */}
       <div className="flex-1 overflow-y-auto px-5 space-y-1 scrollbar-hide">
-        {members?.map((member) => {
+        {conversations?.map((conversation) => {
+          const member = conversation.otherMember;
           const isActive = memberId === member._id;
           const avatarFallback =
             member.user.name?.charAt(0).toUpperCase() || "U";
 
+          const lastMessageBody = conversation.lastMessage?.body;
+          const lastMessageTime = conversation.lastMessage?._creationTime || conversation._creationTime;
+
           return (
             <Link
-              key={member._id}
+              key={conversation._id}
               href={`/workspace/${workspaceId}/member/${member._id}`}
               className={cn(
                 "flex items-center gap-3 px-4 py-3.5 rounded-2xl transition-all duration-200 ease-in-out group",
@@ -71,7 +82,10 @@ export const MessagesSidebar = ({ className }: MessagesSidebarProps) => {
                   </AvatarFallback>
                 </Avatar>
                 {/* Status Indicator */}
-                <div className="absolute bottom-0 right-0 size-3 bg-emerald-500 rounded-full border-2 border-[#F9FAFB] dark:border-zinc-950" />
+                <div className={cn(
+                  "absolute bottom-0 right-0 size-3 rounded-full border-2 border-[#F9FAFB] dark:border-zinc-950 transition-colors duration-200",
+                  conversation.isOnline ? "bg-emerald-500" : "bg-zinc-400 dark:bg-zinc-600"
+                )} />
               </div>
 
               {/* Text Content */}
@@ -81,12 +95,26 @@ export const MessagesSidebar = ({ className }: MessagesSidebarProps) => {
                     {member.user.name}
                   </h3>
                   <span className="text-[11px] text-muted-foreground/60 font-light ml-2 shrink-0">
-                    14:30
+                    {formatMessageTime(lastMessageTime)}
                   </span>
                 </div>
-                <p className="text-[13px] text-muted-foreground/70 font-light truncate">
-                  The budget scheme looks perfec...
-                </p>
+                <div className="flex items-center gap-1">
+                  <p className={cn(
+                    "text-[13px] font-light truncate flex-1",
+                    conversation.unreadCount > 0
+                      ? "text-foreground font-medium"
+                      : "text-muted-foreground/70"
+                  )}>
+                    {lastMessageBody ? stripHtml(lastMessageBody) : "No messages yet"}
+                  </p>
+                  {conversation.unreadCount > 0 && (
+                    <div className="size-4 rounded-full bg-primary flex items-center justify-center shrink-0">
+                      <span className="text-[10px] text-white font-bold">
+                        {conversation.unreadCount}
+                      </span>
+                    </div>
+                  )}
+                </div>
               </div>
             </Link>
           );

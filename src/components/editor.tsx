@@ -150,18 +150,26 @@ const Editor = ({
 
   const isEmpty = !image && text.replace(/<(.|\n)*?>/g, "").trim().length === 0;
 
-  // Keyboard shortcuts for update mode
+  // Keyboard shortcuts
   useEffect(() => {
-    if (variant !== "update" || !quillRef.current) return;
+    if (!quillRef.current) return;
 
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Escape to cancel
+      // Escape to cancel (mostly for update mode)
       if (e.key === "Escape") {
         e.preventDefault();
         onCancel?.();
       }
 
-      // Cmd/Ctrl + Enter to save
+      // Enter key handling
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        if (!isEmpty) {
+          handleSubmit();
+        }
+      }
+
+      // Cmd/Ctrl + Enter to save/send as alternative
       if ((e.metaKey || e.ctrlKey) && e.key === "Enter") {
         e.preventDefault();
         if (!isEmpty) {

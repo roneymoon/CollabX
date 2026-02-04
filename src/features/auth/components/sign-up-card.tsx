@@ -17,6 +17,7 @@ import { SignInFlow } from "../types";
 import { useState } from "react";
 import { TriangleAlert } from "lucide-react";
 import { useAuthActions } from "@convex-dev/auth/react";
+import { useRouter } from "next/navigation";
 
 interface SignUpCardProps {
   setState: (state: SignInFlow) => void;
@@ -24,9 +25,10 @@ interface SignUpCardProps {
 
 export const SignUpCard = ({ setState }: SignUpCardProps) => {
 
+  const router = useRouter();
   const { signIn } = useAuthActions();
-  
-  
+
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -38,11 +40,14 @@ export const SignUpCard = ({ setState }: SignUpCardProps) => {
     e.preventDefault();
     setPending(true);
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");  
+      setError("Passwords do not match.");
       setPending(false);
       return;
     }
     signIn("password", { name, email, password, flow: "signUp" })
+      .then(() => {
+        router.push("/");
+      })
       .catch((err) => {
         setError("Failed to sign up. Please try again.");
       })

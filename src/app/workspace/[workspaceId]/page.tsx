@@ -8,13 +8,16 @@ import { useCreateChannelModal } from "@/features/channels/store/use-create-chan
 import { useMemo, useEffect } from "react";
 import { Loader, TriangleAlert } from "lucide-react";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
+import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
 
 const WorkspaceIdPage = () => {
   const router = useRouter();
   const workspaceId = useWorkspaceId();
   const [open, setOpen] = useCreateChannelModal();
 
-  const {data: member, isLoading: memberLoading} = useCurrentMember({workspaceId});
+  const { data: workspaces, isLoading: workspacesLoading } = useGetWorkspaces();
+
+  const { data: member, isLoading: memberLoading } = useCurrentMember({ workspaceId });
 
   const { data: workspace, isLoading: workspaceLoading } = useGetWorkspace({
     id: workspaceId,
@@ -25,6 +28,14 @@ const WorkspaceIdPage = () => {
 
   const channelId = useMemo(() => channels?.[0]?._id, [channels]);
   const isAdmin = useMemo(() => member?.role == "admin", [member?.role])
+
+  useEffect(() => {
+    if (workspacesLoading) return;
+
+    if (!workspaces || workspaces.length === 0) {
+      router.replace("/");
+    }
+  }, [workspaces, workspacesLoading, router]);
 
   useEffect(() => {
     if (workspaceLoading || channelsLoading || memberLoading || !member || !workspace) return;
@@ -67,13 +78,13 @@ const WorkspaceIdPage = () => {
     );
   }
   return (
-      <div className="h-full flex-1 flex items-center justify-center flex-col gap-2">
-        <TriangleAlert className="size-6 text-muted-foreground" />
-        <span className="text-sm text-muted-foreground">
-          No channels found
-        </span>
-      </div>
-    );
+    <div className="h-full flex-1 flex items-center justify-center flex-col gap-2">
+      <TriangleAlert className="size-6 text-muted-foreground" />
+      <span className="text-sm text-muted-foreground">
+        No channels found
+      </span>
+    </div>
+  );
 };
 
 export default WorkspaceIdPage;

@@ -22,12 +22,15 @@ import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { ChannelInfoPanel } from "@/components/channel-info-panel";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useUpdatePresence } from "@/features/auth/api/use-update-presence";
+import { useGetWorkspaces } from "@/features/workspaces/api/use-get-workspaces";
+import { useRouter } from "next/navigation";
 
 interface WorkspaceIdLayoutProps {
   children: React.ReactNode;
 }
 
 const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
+  const router = useRouter();
   const pathname = usePathname();
   const isMessagesRoute = pathname?.includes("/member/");
   const isActivityRoute = pathname?.includes("/activity");
@@ -44,10 +47,20 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
   const channelId = useChannelId();
   const [isChannelInfoOpen, setIsChannelInfoOpen] = useState(false);
 
+  const { data: workspaces, isLoading: workspacesLoading } = useGetWorkspaces();
   const { data: channel } = useGetChannel({ id: channelId });
   const { data: members } = useGetMembers({ workspaceId });
-  const { data: currentMember } = useCurrentMember({ workspaceId });
+  const { data: currentMember, isLoading: currentMemberLoading } = useCurrentMember({ workspaceId });
   const { mutate: updatePresence } = useUpdatePresence();
+
+  // Redirect to root if user has no workspaces
+  useEffect(() => {
+    if (workspacesLoading) return;
+
+    if (!workspaces || workspaces.length === 0) {
+      router.replace("/");
+    }
+  }, [workspaces, workspacesLoading, router]);
 
   // Track user presence
   useEffect(() => {

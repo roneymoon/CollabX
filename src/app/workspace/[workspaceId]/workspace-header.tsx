@@ -91,7 +91,7 @@ export const WorkspaceHeader = ({
                   className="cursor-pointer py-2.5 rounded-lg px-3 focus:bg-primary/5 text-sm"
                   onClick={() => setInviteOpen(true)}
                 >
-                  Invite people to {workspace.name}
+                  Invite people to this workspace
                 </DropdownMenuItem>
 
                 <DropdownMenuItem
