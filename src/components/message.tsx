@@ -4,7 +4,7 @@ import { format, isToday, isYesterday } from "date-fns";
 import dynamic from "next/dynamic";
 import { toast } from "sonner";
 
-import { Doc, Id } from "../../convex/_generated/dataModel";
+import { Doc, Id } from "@convex/_generated/dataModel";
 import { cn } from "@/lib/utils";
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -79,9 +79,9 @@ export const Message = ({
     }
   };
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // COMPACT MESSAGE (same user, same block)
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   if (isCompact) {
     return (
       <div id={`message-${id}`} className="group px-4 py-1.5 hover:bg-slate-50/30 dark:hover:bg-zinc-900/30 transition-colors animate-fadeIn relative">
@@ -167,9 +167,9 @@ export const Message = ({
     );
   }
 
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   // FULL MESSAGE (new author block)
-  // ─────────────────────────────────────────────
+  // â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   return (
     <div id={`message-${id}`} className="group px-4 py-1.5 hover:bg-slate-50/30 dark:hover:bg-zinc-900/30 transition-colors animate-fadeIn relative border-t border-border first:border-none">
       <div className="flex items-start gap-4">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Id } from "../../convex/_generated/dataModel";
+import { Id } from "@convex/_generated/dataModel";
 import { ReactionPill } from "./reaction-pill";
 
 interface ReactionsProps {

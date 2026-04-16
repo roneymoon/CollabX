@@ -1,7 +1,7 @@
 import { usePaginatedQuery } from "convex/react";
 
 import { api } from "../../../../convex/_generated/api";
-import { Id } from "../../../../convex/_generated/dataModel";
+import { Id } from "@convex/_generated/dataModel";
 
 
 const BATCH_SIZE = 4;

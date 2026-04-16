@@ -7,7 +7,7 @@ import {
     DialogHeader,
     DialogTitle,
 } from "@/components/ui/dialog";
-import { Id } from "../../../../convex/_generated/dataModel";
+import { Id } from "@convex/_generated/dataModel";
 import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useGetOtherMembers } from "@/features/members/api/use-get-other-members";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

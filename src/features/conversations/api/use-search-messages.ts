@@ -1,7 +1,7 @@
 import { useQuery } from "convex/react";
 import { useState, useEffect, useMemo } from "react";
 import { api } from "../../../../convex/_generated/api";
-import { Id } from "../../../../convex/_generated/dataModel";
+import { Id } from "@convex/_generated/dataModel";
 import { rankSearchResults, SearchResult } from "@/lib/search-utils";
 
 interface UseSearchMessagesProps {

@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import Quill from "quill";
 import { useRef, useState, useCallback } from "react";
 import { toast } from "sonner";
-import { Id } from "../../../../../../convex/_generated/dataModel";
+import { Id } from "@convex/_generated/dataModel";
 import { useSetTypingIndicator } from "@/features/conversations/api/use-set-typing-indicator";
 
 const Editor = dynamic(() => import("@/components/editor"), { ssr: false });

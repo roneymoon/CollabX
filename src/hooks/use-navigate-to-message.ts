@@ -1,7 +1,7 @@
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 import { useWorkspaceId } from "./use-workspace-id";
-import { Id } from "../../convex/_generated/dataModel";
+import { Id } from "@convex/_generated/dataModel";
 
 export const useNavigateToMessage = () => {
     const router = useRouter();

@@ -16,7 +16,7 @@ import {
 import { useState } from "react";
 import { toast } from "sonner";
 
-import { Id } from "../../convex/_generated/dataModel";
+import { Id } from "@convex/_generated/dataModel";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Switch } from "@/components/ui/switch";

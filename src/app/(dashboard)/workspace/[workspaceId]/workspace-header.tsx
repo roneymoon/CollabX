@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Doc } from "../../../../convex/_generated/dataModel";
+import { Doc } from "@convex/_generated/dataModel";
 import { ChevronDown, ListFilter, SquarePen } from "lucide-react";
 import { PreferenceModal } from "./preference-modal";
 import { InviteModal } from "./invite-modal";

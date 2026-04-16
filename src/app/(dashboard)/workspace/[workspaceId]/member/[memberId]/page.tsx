@@ -10,7 +10,7 @@ import { useWorkspaceId } from "@/hooks/use-workspace-id";
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useCreateOrGetConversation } from "@/features/conversations/api/use-create-or-get-conversation";
 import { useEffect, useState } from "react";
-import { Id } from "../../../../../../convex/_generated/dataModel";
+import { Id } from "@convex/_generated/dataModel";
 import { toast } from "sonner";
 import { MessageList } from "@/components/message-list";
 import ChatInput from "../../channel/[channelId]/chat-input";
