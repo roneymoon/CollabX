@@ -45,16 +45,13 @@ export const Sidebar = () => {
           />
         )}
 
-        <Link href={`/workspace/${workspaceId}/activity`} className="w-full">
+        <Link href="/notifications" className="w-full">
           <SidebarButton
             icon={Bell}
-            label="Activity Tracking"
-            isActive={pathname.includes("/activity")}
+            label="Notifications"
+            isActive={pathname.includes("/notifications") || pathname.includes("/activity")}
           />
         </Link>
-
-        <SidebarButton icon={Compass} label="Browse Channels" />
-        <SidebarButton icon={MoreHorizontal} label="More Actions" />
       </div>
 
       {/* Footer Section - Utils */}

@@ -1,6 +1,6 @@
 "use client";
 
-import { WorkspaceHeader } from "@/app/workspace/[workspaceId]/workspace-header";
+import { WorkspaceHeader } from "@/app/(dashboard)/workspace/[workspaceId]/workspace-header";
 
 import { useCurrentMember } from "@/features/members/api/use-current-member";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";

@@ -8,8 +8,8 @@ import {
   ResizablePanelGroup,
 } from "@/components/ui/resizable";
 
-import { Toolbar } from "@/app/workspace/[workspaceId]/toolbar";
-import { Sidebar } from "@/app/workspace/[workspaceId]/sidebar";
+import { Toolbar } from "@/app/(dashboard)/workspace/[workspaceId]/toolbar";
+import { Sidebar } from "@/app/(dashboard)/workspace/[workspaceId]/sidebar";
 import { WorkspaceSidebar } from "./workspace-sidebar";
 import { MessagesSidebar } from "./messages-sidebar";
 import { ActivitySidebar } from "./activity-sidebar";
@@ -100,7 +100,6 @@ const WorkspaceIdLayout = ({ children }: WorkspaceIdLayoutProps) => {
   return (
     <div className="h-full bg-background overflow-hidden">
       <div className="h-full w-full bg-card flex overflow-hidden">
-        <Sidebar />
         {isActivityRoute ? (
           // Activity route: No sidebar, full width for content
           <div className="flex-1 flex flex-col h-full bg-background">

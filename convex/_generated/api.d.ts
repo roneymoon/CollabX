@@ -18,6 +18,7 @@ import type * as http from "../http.js";
 import type * as members from "../members.js";
 import type * as messageStatus from "../messageStatus.js";
 import type * as messages from "../messages.js";
+import type * as notifications from "../notifications.js";
 import type * as presence from "../presence.js";
 import type * as reactions from "../reactions.js";
 import type * as typingIndicators from "../typingIndicators.js";
@@ -42,6 +43,7 @@ declare const fullApi: ApiFromModules<{
   members: typeof members;
   messageStatus: typeof messageStatus;
   messages: typeof messages;
+  notifications: typeof notifications;
   presence: typeof presence;
   reactions: typeof reactions;
   typingIndicators: typeof typingIndicators;

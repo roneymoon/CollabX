@@ -103,6 +103,34 @@ const schema = defineSchema({
     lastSeenAt: v.number(),
   })
     .index("by_user_id", ["userId"]),
+  notifications: defineTable({
+    memberId: v.id("members"),
+
+    workspaceId: v.id("workspaces"),
+    channelId: v.optional(v.id("channels")),
+    conversationId: v.optional(v.id("conversations")),
+
+    messageId: v.optional(v.id("messages")),
+    reactionId: v.optional(v.id("reactions")),
+
+    actorMemberId: v.optional(v.id("members")),
+
+    type: v.union(
+      v.literal("mention"),
+      v.literal("reply"),
+      v.literal("reaction"),
+      v.literal("message"),
+      v.literal("system")
+    ),
+
+    isRead: v.boolean(),
+
+    createdAt: v.number(),
+  })
+    .index("by_member_id", ["memberId"])
+    .index("by_member_id_isRead", ["memberId", "isRead"])
+    .index("by_member_id_createdAt", ["memberId", "createdAt"])
+    .index("by_workspace_id", ["workspaceId"]),
 });
 
 
